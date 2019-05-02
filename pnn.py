@@ -1,36 +1,89 @@
 
-# 0. import the needed packages
 import numpy as np
 import pandas as pd
+import math
 from numpy import genfromtxt
 import matplotlib.pyplot as plt
 
 # 1. Read the data points
-my_data = pd.read_csv('test.csv', sep=', ',header=0)
-cols_to_norm = [ "5d", "6e"]
-my_data[cols_to_norm] = my_data[cols_to_norm].apply(lambda x: (x - x.min()) / (x.max() - x.min()))
+a = pd.read_csv('./app/data/2016.csv',header=0)
+b = pd.read_csv('./app/data/2016_2.csv', header=0)
+c = pd.read_csv('./app/data/2017.csv', header=0)
+d = pd.read_csv('./app/data/2018.csv', header=0)
+
+important = ["IDE_EDA_ANO","IDE_SEX","DIAB_PAD_MAD","DIAB_HER","DIAB_HIJ",
+"DIAB_OTROS","CVE_ACT_FIS","CVE_TAB","CVE_COMB_TUBER",
+"CVE_COMB_CANCER","CVE_COMB_OBESIDAD","CVE_COMB_HIPER",
+"CVE_COMB_VIH_SIDA","CVE_COMB_DEPRE","CVE_COMB_DISLI","CVE_COMB_CARDIO",
+"CVE_COMB_HEPA","CVE_NUT","CVE_OFT",
+"CVE_PIES","CVE_DIAB","CVE_TIPO_DISC_MOTO","CVE_TIPO_DISC_VISU",
+"PESO","ESTATURA"]
+
+label="CVE_DIAB"
 
 
-cleaned_data = np.array([ my_data[x].tolist() for x in my_data.iloc[:,:5].columns ]).T
+result = pd.concat([a, b, c, d])
+
+result= result.replace("Masculino", 1)
+result= result.replace("Femenino", 0)
+result= result.replace("Si", 1)
+result= result.replace("No", 0)
+result['CVE_DIAB'] = result['CVE_DIAB'].replace(0,2)
+
+result["CVE_TAB"]  = result.apply(lambda row: 0 if "Nunca" in str(row["CVE_TAB"])  else 1,
+                     axis=1)
+
+result.fillna(0)
+
+result["CVE_NUT"]  = result.apply(lambda row: 0 if "Nunca" in str(row["CVE_NUT"])  else 1,
+                     axis=1)
 
 
-print (my_data)
-print (cleaned_data)
-# raw_input("To show the cleaned data!")
+result["CVE_OFT"]  = result.apply(lambda row: 0 if "Nunca" in str(row["CVE_OFT"])  else 1,
+                     axis=1)
 
-# 2. Declare the needed variable 
-groups = my_data.groupby('R')
+
+
+
+result["CVE_PIES"]  = result.apply(lambda row: 0 if "Nunca" in str(row["CVE_PIES"])  else 1,
+                     axis=1)
+
+
+result= result[important]
+
+                 
+                            
+
+cols_to_norm = [ "PESO"  , "ESTATURA", "IDE_EDA_ANO"]
+
+result[cols_to_norm] = result[cols_to_norm].apply(lambda x: (x - x.min()) / (x.max() - x.min()))
+
+#print(result.to_string())
+
+important.remove(label)
+
+cleaned_data = np.array([ result[x].tolist() for x in important ]).T
+
+
+# print (result)
+# print (cleaned_data)
+#print(result.to_string())
+
+groups = result.groupby(label)
 number_of_classes = len(groups)  # Here we have 3 different classes
 dictionary_of_sum = {}
-numrber_of_features  = len(my_data.columns) -1 # We have feature 1 and feature 2 
+numrber_of_features  = len(result.columns) -1 # We have feature 1 and feature 2 
 sigma = 1
 increament_current_row_in_matrix = 0
 
-# 3. Define the point that we wish to classifiy - Clearly it is Red 
-point_want_to_classify = [ 1  , 1 ,  0 , 1.0 , 1.0]
 
-# **INPUT LAYER OF THE PNN **
-# 4. Loop via number of classes 
+
+point_want_to_classify =[0.15730337078651685, 1.0, 0.0, 0.0, 0.0,
+0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0,
+ 1.0, 1.0, 0.0, 0.0, 0.07000070000700007, 0.17017017017017017]
+
+print(len(point_want_to_classify))
+
 for k in range(1,number_of_classes+1):
 
 	# 4.1 Initiate the sume to zero 
@@ -50,14 +103,21 @@ for k in range(1,number_of_classes+1):
 		temparr=[]
 		for index in range(len(point_want_to_classify)-1):
 
-			tempx = (point_want_to_classify[index] - cleaned_data[increament_current_row_in_matrix][index]) * (point_want_to_classify[index] - cleaned_data[increament_current_row_in_matrix][index]) 
+			tempx = math.pow((point_want_to_classify[index] - cleaned_data[increament_current_row_in_matrix][index]),2)
+			print("->",tempx)
+			#print("n",increament_current_row_in_matrix)
 			temparr.append(tempx)
 		
 		temp_sum = -1 * (sum(temparr))
-		temp_sum = temp_sum/( 2 * np.power(sigma,2) )
+		print("!!",temp_sum) 
+		temp_sum = temp_sum/( 2 * np.power(sigma,2)  )
+		print("!!-",temp_sum) 
 
 		# 6.2 - Implementation of Sum of Gaussians
-		temp_summnation = temp_summnation + temp_sum
+
+        
+		temp_summnation = temp_summnation + math.e**temp_sum 
+		print("!!+",temp_summnation) 
 
 		# 6.3 - Increamenting the row of the matrix to get the next data point
 		increament_current_row_in_matrix  = increament_current_row_in_matrix + 1
@@ -69,32 +129,3 @@ for k in range(1,number_of_classes+1):
 print (dictionary_of_sum)
 classified_class = str( max(dictionary_of_sum, key=dictionary_of_sum.get) )
 print (classified_class)
-
-# # 9. Group the data by class 
-# groups = my_data.groupby('Class')
-
-# # Drawing the graph
-# fig, ax = plt.subplots()
-# ax.margins(0.05) # Optional, just adds 5% padding to the autoscaling
-# for name, group in groups:
-#     ax.plot(group['Feature 1'], group['Feature 2'], marker='o', linestyle='', ms=12, label=name)
-
-# # Draw the unclassified data point 
-# ax.plot(point_want_to_classify[0], point_want_to_classify[1], marker='o', linestyle='', ms=12)
-
-# # Setting the limit of x and y axis
-# axes = plt.gca()
-# axes.set_xlim([0,1])
-# axes.set_ylim([0,1])
-# plt.title('Classified as : ' + str(classified_class) )
-# plt.xlabel('X')
-# plt.ylabel('Y')
-
-# # Giving a grid and show the plot
-# plt.grid()
-# plt.show()
-
-# # ---- END OF THE CODE ------
-
-
-

@@ -7,79 +7,75 @@
   </style>
 {% endblock %}
 {% block content %}
-<div class="row">
-    <form class="col s12">
-      <div class="row">
-        <div class="input-field col s6">
-          <input placeholder="Placeholder" id="first_name" type="text" class="validate">
-          <label for="first_name">First Name</label>
-        </div>
-        <div class="input-field col s6">
-          <input id="last_name" type="text" class="validate">
-          <label for="last_name">Last Name</label>
-        </div>
+
+
+<form method="POST" action="{{ url_for('evaluate') }}">
+
+  {% for k, v in dict.items() %}
+
+  {% if k == "PESO" or k == "ESTATURA" or k == "EDAD" %}
+  <div class="row">
+      <p>{{ v }}</p>
+
+      <div class="col s12">
+      <label>
+        <input name="{{ k }}" type="number" step="any" value="50" />
+      </label>
       </div>
-      <div class="row">
-        <div class="input-field col s12">
-          <input disabled value="I am not editable" id="disabled" type="text" class="validate">
-          <label for="disabled">Disabled</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s12">
-          <input id="password" type="password" class="validate">
-          <label for="password">Password</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s12">
-          <input id="email" type="email" class="validate">
-          <label for="email">Email</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col s12">
-          This is an inline input field:
-          <div class="input-field inline">
-            <input id="email_inline" type="email" class="validate">
-            <label for="email_inline">Email</label>
-            <span class="helper-text" data-error="wrong" data-success="right">Helper text</span>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div>
+    </div>
+    
+  {% else %}
+  {% if k == "GENERO"  %}
+    
+  <div class="row">
+      <p> {{ v }}</p>
+      <div class="col s6">
+    
+      <label>
+        <input name="{{ k }}" type="radio" value="1" checked />
+        <span>Masculino</span>
+      </label>
+    </div>
+    <div>
+      <label>
+        <input name="{{ k }}" type="radio" value="0"/>
+        <span>Femenino</span>
+      </label>
+    </div>
+    </div>
+
+    {% else %}
+
+
+
+  <div class="row">
+      <p> {{ v }}</p>
+      <div class="col s6">
+    
+      <label>
+        <input name="{{ k }}" type="radio" value="1" checked />
+        <span>Verdadero</span>
+      </label>
+    </div>
+    <div>
+      <label>
+        <input name="{{ k }}" type="radio" value="0"/>
+        <span>False</span>
+      </label>
+    </div>
+    </div>
+  
+    {% endif %}
+    {% endif %}
+    
+
+  {% endfor %}
+
+  <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+      <i class="material-icons right">send</i>
+    </button>
+  
+</form>
+
+
 {% endblock %}
-
-Edad
-Género
-
-Padre o Madre
-Hermanos
-Hijos
-Otros (Tios, Abuelos)
-No
-Desconoce
-
-
-Tuberculosis
-Cancer
-VIH
-Obesidad
-Hipertension
-CVE_COMB_URI
-Depresión
-Dislipidemia
-Cardiopatia
-Hepatitis
-Otra
-
-Oftalmologo
-Nutriologo
-Podologo
-
-Discapacidad Visual 
-
-PESO
-ESTATURA
-#Cintura
