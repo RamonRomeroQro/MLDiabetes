@@ -7,7 +7,7 @@ from keras.optimizers import SGD
 
 width = 5
 model = Sequential()
-model.add(Dense(width, input_dim=width))
+model.add(Dense(width, input_shape=width))
 model.add(Activation('relu'))
 model.add(Dense(1))
 model.add(Activation('softmax'))
