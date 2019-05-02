@@ -3,6 +3,9 @@ import numpy as np
 import pandas as pd
 import math
 from numpy import genfromtxt
+from sklearn.covariance import EllipticEnvelope
+from sklearn import svm
+
 
 app = Flask(__name__)
 
@@ -12,8 +15,8 @@ def hello_world():
     dictionary = {"PESO": "Peso en KG" , "ESTATURA": "Estatura en metros",
                 "EDAD": "¿Qué edad tiene?","GENERO": "¿Cuál es su genero?",
                 "PADRES": "¿Alguno de sus padres es diabético?",
-                "HERMANOS": "Si tiene hemanos, ¿Alguno de sus padres es diabético?",
-                "HIJOS":  "Si tiene hemanos, ¿Alguno de sus padres es diabético?",
+                "HERMANOS": "Si tiene hemanos, ¿Alguno de sus hermanos es diabético?",
+                "HIJOS":  "Si tiene hijos, ¿Alguno de sus padres es diabético?",
                 "OTROS": "Tiene algun otro familiar diabético",
                 "ACTIVIDAD_FISICA": "¿Realiza 30 min o mas de actividad fisica?",
                 "TABAQUISMO": "¿Es fumador o lo ha sido?",
@@ -49,6 +52,10 @@ def ml(predict):
     "CVE_COMB_HEPA","CVE_NUT","CVE_OFT",
     "CVE_PIES","CVE_DIAB","CVE_TIPO_DISC_MOTO","CVE_TIPO_DISC_VISU",
     "PESO","ESTATURA"]
+
+
+
+
     # label
 
     label="CVE_DIAB"
@@ -85,6 +92,32 @@ def ml(predict):
     max_norm_estatura = result['ESTATURA'].max()
     min_norm_peso = result['PESO'].min()
     max_norm_peso = result['PESO'].max()
+
+
+
+    select = result.loc[result.CVE_DIAB == 1]
+    print(select)
+    fx= ["PESO","ESTATURA"]
+    #X = np.array([ result[x].tolist() for x in fx  ].append(]) ).T
+
+    a = [ select[x].tolist() for x in fx  ]
+    a[0].append(predict[-2])
+    a[1].append(predict[-1])
+    X = np.array(a).T
+    outliers_fraction = 0.15
+    sout= svm.OneClassSVM(nu=outliers_fraction, kernel="rbf",
+                                      gamma=0.1)
+    sout.fit(X)
+    ok1 = sout.predict(X)
+    sv = ok1[-1]
+
+
+
+    outlier = EllipticEnvelope(contamination=0.1)
+
+    outlier.fit(X)
+    prediction1 = outlier.predict(X)
+    eliptic = prediction1[-1]
                     
     # Normalization         
     cols_to_norm = [ "PESO"  , "ESTATURA", "IDE_EDA_ANO"]
@@ -92,6 +125,10 @@ def ml(predict):
     #print(result.to_string())
     important.remove(label)
     cleaned_data = np.array([ result[x].tolist() for x in important ]).T
+
+    
+
+
 
 
     # print (result)
@@ -151,7 +188,7 @@ def ml(predict):
         dictionary_of_sum[k]  = temp_summnation 
 
     classified_class = str( max(dictionary_of_sum, key=dictionary_of_sum.get) )
-    return   (dictionary_of_sum, classified_class)
+    return   (dictionary_of_sum, classified_class, eliptic, sv)
 
 
 @app.route('/evaluate', methods=['POST'])
@@ -166,9 +203,9 @@ def evaluate():
 
         predict= [ float(request.form[x]) for x in order]
         print(predict)
-        ev , c= ml(predict)
-        print(ev, c)
-        return hello_world()
+        ev , c, e, sv= ml(predict)
+        print(ev, c, e, sv)
+        return result(sv)
 
 
       
@@ -176,3 +213,10 @@ def evaluate():
 
     else:
         return hello_world()
+
+
+
+@app.route('/result')
+def result(eval):
+    return render_template('more.html', result=eval)
+
