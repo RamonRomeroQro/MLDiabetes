@@ -8,18 +8,14 @@
 {% endblock %}
 {% block content %}
 
-{% if result == -1 %}
+<h3>Based on selected logistic regrssion</h3>
+{% for k,v in ans.items() %}
 
-<h2>Por el momento no tienes muy poco riesgo de padecer diabetes</h2>
-
-{% else %}
-<p>La posibilidad e que tengas diabetes es bastante alta, te invitamos a leer las 
-    siguientes recomendacion y consultar a tu médico</p>
+<br>{{k}} -> {{v}}
 
 
-{% endif %}
 
-
+{% endfor %}
 
 <h3>¿Cómo puedo prevenir o retrasar la aparición de la diabetes tipo 2?</h3>
 <p>Si está en riesgo de desarrollar diabetes, es posible que pueda evitarla o retrasarla. La mayoría de las cosas que debe hacer implican un estilo de vida más saludable. Si realiza estos cambios, obtendrá además otros beneficios de salud. Puede reducir el riesgo de otras enfermedades y probablemente se sienta mejor y tenga más energía. Los cambios son:</p>
@@ -33,9 +29,24 @@
 <li><strong>colesterol</strong>El colesterol es un tipo de grasa que circula por el cuerpo en dos tipos de compuestos o lipoproteínas. Es importante tener un nivel sano de ambos.
     <a href="https://medlineplus.gov/spanish/diabetesmedicines.html">medicamento para la diabetes</a></li>
 </ul>
-<p class="attribution">NIH: Instituto Nacional de la Diabetes y las Enfermedades Digestivas y Renales</p></div>
+
+<div class="container">
+
+  <p class="attribution">NIH: Instituto Nacional de la Diabetes y las Enfermedades Digestivas y Renales</p></div>
                                 
-<p>https://medlineplus.gov/spanish/howtopreventdiabetes.html</p>
+  <p>https://medlineplus.gov/spanish/howtopreventdiabetes.html</p>
+  
+  
+  {% for k,v in result.items() %}
+  
+  <br>{{k}}->{{v}}
+  
+  
+  
+  {% endfor %}
+  
+</div>
+
 
 
 {% endblock %}
