@@ -77,7 +77,7 @@ def ml(arr):
 
             res= str(loaded_model.predict(select))
             try:
-                res=res+' % '+str(loaded_model.predict_proba(select))
+                res=res+' % '+str(loaded_model.predict_proba(select)) # + " " + str(loaded_model.coef_)
             except:
                 pass
         else:
@@ -88,7 +88,9 @@ def ml(arr):
                 res=res+' % '+str(loaded_model.predict_proba(full))
             except:
                 pass
-                
+        
+        
+
         answers[i]=res
 
 
