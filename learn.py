@@ -20,7 +20,7 @@ import numpy as np
 import itertools
 from subprocess import check_output
 
-print("Reading data and endoding")
+print("Reading data and encoding")
 
 a = pd.read_csv('./data/2016.csv', header=0)
 b = pd.read_csv('./data/2016_2.csv', header=0)
