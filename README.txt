@@ -1,3 +1,11 @@
+RAMON ROMERO 
+------------
+
+DATA SETS MUST REMAIN IN PRIVATE
+
+
+REPORT AND DETAILS ON REPORT.pdf
+RECORDED DEMO ON  DEMO.mov
 
 -----
 
@@ -9,12 +17,6 @@ in the population of Mexico about its actual situation and take actions in order
 
 --------------------
 
-
-REPORT AND DETAILS ON REPORT.pdf
-RECORDED DEMO ON  DEMO.mov
-
-
----------------
 
 Flask App:
 
