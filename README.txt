@@ -1,10 +1,20 @@
 
-
+-----
 
 Purpose
 
 Develop a diagnostic evaluation tool which can lead to develop consciousness
 in the population of Mexico about its actual situation and take actions in order to solve it.
+
+
+--------------------
+
+
+REPORT AND DETAILS ON REPORT.pdf
+RECORDED DEMO ON  DEMO.mov
+
+
+---------------
 
 Flask App:
 
@@ -21,7 +31,7 @@ IT WILL RUN ON:
 
  http://127.0.0.1:5000/ 
 
- 
+
 #######
 Others:
 
