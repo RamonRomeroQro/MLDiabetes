@@ -19,6 +19,10 @@
     
 -------
 
+
+<a href="https://github.com/EduardoLarios/MicrosoftHackABot"> Check out the Bot Implementation </a> in collaboration with [@EduardoLarios](https://www.github.com/EduardoLarios),[@alelopezperez](https://www.github.com/alelopezperez) & [@alejandrosalmon](https://www.github.com/alejandrosalmon),
+
+-------
 DATA SETS MUST REMAIN IN PRIVATE
 
 REPORT AND DETAILS ON REPORT.pdf<br>
@@ -80,5 +84,4 @@ $ ./init.sh
     ```
     
 
-<a href="https://github.com/EduardoLarios/MicrosoftHackABot"> Check out the Bot Implementation </a> @EduardoLarios , @alelopezperez & @alejandrosalmon
 
