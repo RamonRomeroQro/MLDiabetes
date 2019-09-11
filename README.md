@@ -49,9 +49,10 @@ $ ./init.sh
 
 
     Only run web app:
-
+    $ python3 -m venv venv
+    $ pip install -r req.txt
     $ ./run_app.sh
 
 
-
+Check out the Bot implementation
 
