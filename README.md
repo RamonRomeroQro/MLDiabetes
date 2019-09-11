@@ -1,6 +1,8 @@
 # Diabetic Prediction with AI
 ## Ramón Romero
 
+-----
+
     Copyright 2019 © Ramón Romero @RamonRomeroQro
     Intelligent Systems, ITESM.
     A01700318 for ITESM
@@ -20,7 +22,7 @@
 -------
 
 
-<a href="https://github.com/EduardoLarios/MicrosoftHackABot"> Check out the Bot Implementation </a> in collaboration with [@EduardoLarios](https://www.github.com/EduardoLarios),[@alelopezperez](https://www.github.com/alelopezperez) & [@alejandrosalmon](https://www.github.com/alejandrosalmon),
+Check out the <a href="https://github.com/EduardoLarios/MicrosoftHackABot">Bot Implementation</a> for Microsoft Hackaton in Queréraro, in collaboration with [@EduardoLarios](https://www.github.com/EduardoLarios), [@alelopezperez](https://www.github.com/alelopezperez) & [@alejandrosalmon](https://www.github.com/alejandrosalmon).
 
 -------
 DATA SETS MUST REMAIN IN PRIVATE
