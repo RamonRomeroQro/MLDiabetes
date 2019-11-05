@@ -1,6 +1,6 @@
 absl-py==0.7.1
 appnope==0.1.0
-astor==0.7.1
+astor==0.8.0
 attrs==19.1.0
 autopep8==1.4.4
 backcall==0.1.0
