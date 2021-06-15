@@ -1,0 +1,9 @@
+venv
+.DS_Store
+.dockerignore
+.git/
+.gitignore
+.ipynb_checkpoints/
+DEMO.mov
+__pycache__/
+data/

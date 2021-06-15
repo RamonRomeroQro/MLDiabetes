@@ -2,9 +2,10 @@
 # dependencies
 from sklearn.preprocessing import StandardScaler  # Standardisation
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.externals import joblib
+import joblib
 import copy
-from sklearn.externals.joblib import dump, load
+import joblib
+from joblib import dump, load
 import warnings
 from sklearn import metrics
 from sklearn.linear_model import LogisticRegression
@@ -22,10 +23,9 @@ from subprocess import check_output
 
 print("Reading data and encoding")
 
-a = pd.read_csv('./data/2016.csv', header=0)
-b = pd.read_csv('./data/2016_2.csv', header=0)
-c = pd.read_csv('./data/2017.csv', header=0)
-d = pd.read_csv('./data/2018.csv', header=0)
+a = pd.read_csv('./data/Diabetes_2016.csv', header=0)
+b = pd.read_csv('./data/Diabetes_2017.csv', header=0)
+c = pd.read_csv('./data/Diabetes_2018.csv', header=0)
 # key atributes
 important = ["IDE_EDA_ANO", "IDE_SEX", "DIAB_PAD_MAD", "DIAB_HER", "DIAB_HIJ",
              "DIAB_OTROS", "CVE_ACT_FIS", "CVE_TAB", "CVE_COMB_TUBER",
@@ -40,7 +40,7 @@ expected = "CVE_DIAB"
 
 # vertical join
 
-result = pd.concat([a, b, c, d])
+result = pd.concat([a, b, c])
 
 # hot encoding
 
